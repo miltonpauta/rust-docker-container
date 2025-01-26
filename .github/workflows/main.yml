@@ -1,16 +1,14 @@
 name: ci
 
-
-on: 
-  push: 
-    branches: 
+on:
+  push:
+    branches:
       - main
 
-
-jobs: 
-  build: 
+jobs:
+  build:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -23,3 +21,8 @@ jobs:
         with:
           push: true
           tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+      - name: Debug variables
+        run: |
+          echo "DOCKER_USERNAME=${{ vars.DOCKER_USERNAME }}"
+          echo "Repository name=${{ github.event.repository.name }}"
+          echo "Full tag: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest"
