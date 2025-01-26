@@ -12,7 +12,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ vars.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -20,9 +20,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
-      - name: Debug variables
-        run: |
-          echo "DOCKER_USERNAME=${{ vars.DOCKER_USERNAME }}"
-          echo "Repository name=${{ github.event.repository.name }}"
-          echo "Full tag: ${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest"
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
